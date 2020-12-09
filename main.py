@@ -13,10 +13,6 @@ def main():
     df1 = tfidfModel(corpus1)
     df2 = tfidfModel(corpus2)
 
-    # da implementare
-    # se un elemento del corpus è presente nella parte finale
-    # dell'url quell'elemento peserà di più (x1.25)
-
     df1, df2 = (colonneComuni(df1, df2))
 
     df1 = annullaTermComTfIdf(df1)
@@ -24,20 +20,44 @@ def main():
 
     df1, df2 = (colonneComuni(df1, df2))
 
+    df1 = increase_elem_value(df1)
+    df2 = increase_elem_value(df2)
+
     listaCoppiePagineDf1 = trova_pag_corrisp(df1, df2)
     listaCoppiePagineDf2 = trova_pag_corrisp(df2, df1)
-
-    # print(listaCoppiePagineDf1)
-    # print(listaCoppiePagineDf2)
-
     listaFinale = inters_liste(listaCoppiePagineDf1, listaCoppiePagineDf2)
     stampa_url(listaFinale, source1, source2)
+
+
+
+# se nelle colonne è presente un solo valore diverso da 0, raddoppialo
+def increase_elem_value(df):
+    for i in df:
+        if(len(set(df[i])) == 2):
+            df[i] = df[i].apply(lambda x: x*2 if x != 0 else x)
+    return df
+
+# dato un df, per ogni riga aggiungi in lista tutte le parole con peso maggiore di 0.6
+# ritorna una lista di liste i cui elem sono gli elem con peso maggiore di 0.6 per ogni riga
+# es [['john', 'wall'],['luguentz', 'dort'],...]
+def impElemList(df):
+    list = []
+    for i in df.T:
+        list2 = []
+        dfT = df.T
+        for index, row in dfT.iterrows():
+            if row[i] > 0.06:
+                list2.append(index)
+        list.append(list2)
+    return list
+
 
 # dati due df costruisce una lista di parole importanti per df1
 # e somma gli elem corrisp in df2 ritornando una lista di liste con
 # l'indice df1 e il corrisponte indice di df2
 def trova_pag_corrisp(df1, df2):
-    return allineaPagine(impElemList(df1), df2)
+    elem_imp = impElemList(df1)
+    return allineaPagine(elem_imp, df2)
 
 
 # ritorna una lista con le coppie indice dei due df che hanno matchato (stessa coppia)
@@ -52,9 +72,10 @@ def inters_liste(lista1, lista2):
 
 # data una lista e due sorgenti, stampa gli url corrispondenti ad ogni coppia nella lista
 def stampa_url(lista, source1, source2):
+    print('numero pagine corrispondinti: ', len(lista))
     for i in range(len(lista)):
         print('indice source1: ', lista[i][0], 'indice source2:', lista[i][1], '\n')
-        print(source1[lista[i][0]],'  <--->  ', source2[lista[i][1]])
+        print(source1[lista[i][0]], source2[lista[i][1]])
 
 
 # data una lista di liste contenenti le parole più importanti, cerca nel df qual'è l'indice con sommatoria maggiore per ogni lista di parole date
@@ -78,19 +99,6 @@ def indice_corrisp(df):
 def sum_df_col(row):
     return row.sum()
 
-# dato un df, per ogni riga aggiungi in lista tutte le parole con peso maggiore di 0
-# ritorna una lista di liste i cui elem sono gli elem con peso maggiore di 0 per ogni riga
-# es [['john', 'wall'],['luguentz', 'dort'],...]
-def impElemList(df):
-    list = []
-    for i in df.T.columns:
-        list2 = []
-        for index, row in df.T.iterrows():
-            if row[i] > 0.0:
-                list2.append(index)
-        list.append(list2)
-    #print(list)
-    return list
 
 # ritorna indice e key del max elem del dizionario
 def maximum_keys(dict):
@@ -122,7 +130,7 @@ def not_all_positive(iterator):
 #     return df.apply(lambda x: pd.Series(np.concatenate([x.nlargest(15).index.values, x.nsmallest(0).index.values])), axis=1)
 
 
-# ritorna soltanto le colonne comuni ai due df
+# ritorna il df con le colonne comuni ai due df
 def colonneComuni(df1, df2):
     lista_col_comuni = df1.columns.intersection(df2.columns)
     return df1[lista_col_comuni], df2[lista_col_comuni]
