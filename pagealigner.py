@@ -1,3 +1,10 @@
+def corrisp_url(df1, df2):
+    listaCoppiePagineDf1 = trova_pag_corrisp(df1, df2)
+    listaCoppiePagineDf2 = trova_pag_corrisp(df2, df1)
+    listaFinale = inters_liste(listaCoppiePagineDf1, listaCoppiePagineDf2)
+    return listaFinale
+
+
 # dati due df costruisce una lista di parole importanti per df1
 # e somma gli elem corrisp in df2 ritornando una lista di liste con
 # l'indice df1 e il corrisponte indice di df2
@@ -27,6 +34,7 @@ def impElemList(df):
             if row[i] > 0.06:
                 list2.append(index)
         list.append(list2)
+    #print(list)
     return list
 
 # data una lista di liste contenenti le parole più importanti, cerca nel df qual'è l'indice con sommatoria maggiore per ogni lista di parole date

@@ -2,6 +2,24 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+def esegui_tfIdf(corpus1, corpus2):
+    df1 = tfidfModel(corpus1)
+    df2 = tfidfModel(corpus2)
+
+    #print(df1.columns)
+    df1, df2 = colonneComuni(df1, df2)
+
+    df1 = annullaTermComTfIdf(df1)
+    df2 = annullaTermComTfIdf(df2)
+
+    df1, df2 = colonneComuni(df1, df2)
+
+    df1 = increase_elem_value(df1)
+    df2 = increase_elem_value(df2)
+
+
+    return df1, df2
+
 # given a corpus, returns a dataframe built with tf-idf model
 def tfidfModel(corpus):
     vectorizer = TfidfVectorizer(stop_words="english")
@@ -14,6 +32,7 @@ def tfidfModel(corpus):
 # ritorna il df con le colonne comuni ai due df
 def colonneComuni(df1, df2):
     lista_col_comuni = df1.columns.intersection(df2.columns)
+    #print('lista_col_comuni: ', lista_col_comuni)
     return df1[lista_col_comuni], df2[lista_col_comuni]
 
 # rimuovi tutte le colonne che hanno valori tutti con stesso peso e tutte le colonne che non contengono almeno uno 0
