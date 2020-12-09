@@ -33,6 +33,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# idea
+.idea
+
 # mypy
 .mypy_cache/
 .dmypy.json
