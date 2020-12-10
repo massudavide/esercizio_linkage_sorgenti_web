@@ -1,3 +1,5 @@
+import numpy as np
+
 def corrisp_url(df1, df2):
     listaCoppiePagineDf1 = trova_pag_corrisp(df1, df2)
     listaCoppiePagineDf2 = trova_pag_corrisp(df2, df1)
@@ -22,20 +24,30 @@ def inters_liste(lista1, lista2):
                 listaFinale.append(lista1[i])
     return listaFinale
 
-# dato un df, per ogni riga aggiungi in lista tutte le parole con peso maggiore di 0.6
-# ritorna una lista di liste i cui elem sono gli elem con peso maggiore di 0.6 per ogni riga
+# dato un df, per ogni riga aggiungi in lista tutte le parole con peso maggiore della media aritmetica
+# ritorna una lista di liste i cui elem sono gli elem con peso maggiore della media aritmetica per ogni riga
 # es [['john', 'wall'],['luguentz', 'dort'],...]
 def impElemList(df):
     list = []
+    valore_soglia = media_aritmetica(df)
     for i in df.T:
         list2 = []
         dfT = df.T
         for index, row in dfT.iterrows():
-            if row[i] > 0.06:
+            if row[i] > valore_soglia:
                 list2.append(index)
         list.append(list2)
     #print(list)
     return list
+
+def media_aritmetica(df):
+    somma = df.values.sum()
+    numero = np.count_nonzero(df)
+    media = somma/numero
+    print('somma: ', somma, 'numero: ', numero, 'media:', media)
+    return media
+
+
 
 # data una lista di liste contenenti le parole più importanti, cerca nel df qual'è l'indice con sommatoria maggiore per ogni lista di parole date
 # e ritorna una lista di liste contenente l'indice del df corrisp alle parole e l'indice del secondo df che ha dato risultato maggiore
@@ -43,7 +55,9 @@ def impElemList(df):
 def allineaPagine(list, df):
     listaPagine = []
     for i in range(len(list)):
-        listaPagine.append([i, indice_corrisp(df[list[i]])])
+        indice = indice_corrisp(df[list[i]])
+        if indice != -1:
+            listaPagine.append([i, indice])
     return listaPagine
 
 # dato un df somma tutti gli elementi sulle righe e ritorna l'indice maggiore
@@ -51,6 +65,8 @@ def indice_corrisp(df):
     dict = {}
     for i in df.T:
         dict[i] = sum_df_col(df.T[i])
+    if not dict:
+        return -1
     indice, maxValue = maximum_keys(dict)
     return indice
 

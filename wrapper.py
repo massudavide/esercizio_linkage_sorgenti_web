@@ -13,6 +13,7 @@ def getLeaves(url):
             return all_leaves
     tree = html.fromstring(page.content)
     all_leaves = tree.xpath('//*[not(child::*)]/text()')
+    print(url, all_leaves)
     return all_leaves
 
 # given an input with filename, returns a list of url
