@@ -3,7 +3,6 @@ import tfidfmodel as model
 import pagealigner as aligner
 
 def main():
-    # basket
     source1 = wr.loadSource("dataset/nba.txt")
     source2 = wr.loadSource("dataset/espn.txt")
 
