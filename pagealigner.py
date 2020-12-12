@@ -56,8 +56,7 @@ def allineaPagine(list, df):
     listaPagine = []
     for i in range(len(list)):
         indice = indice_corrisp(df[list[i]])
-        if indice != -1:
-            listaPagine.append([i, indice])
+        listaPagine.append([i, indice])
     return listaPagine
 
 # dato un df somma tutti gli elementi sulle righe e ritorna l'indice maggiore
@@ -65,8 +64,6 @@ def indice_corrisp(df):
     dict = {}
     for i in df.T:
         dict[i] = sum_df_col(df.T[i])
-    if not dict:
-        return -1
     indice, maxValue = maximum_keys(dict)
     return indice
 
