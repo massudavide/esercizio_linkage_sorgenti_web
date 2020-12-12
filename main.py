@@ -4,21 +4,9 @@ import pagealigner as aligner
 
 def main():
     # basket
-    source1 = wr.loadSource("dataset/rotoworld.txt")
+    source1 = wr.loadSource("dataset/nba.txt")
     source2 = wr.loadSource("dataset/espn.txt")
 
-    # libri
-    # source1 = wr.loadSource("dataset/libri/ibs.txt")
-    # source2 = wr.loadSource("dataset/libri/feltrinelli.txt")
-
-    # tennis
-    # source1 = wr.loadSource("dataset/tennis/atptour.txt")
-    # source2 = wr.loadSource("dataset/tennis/eurosport.txt")
-
-    # film
-    # source1 = wr.loadSource("dataset/film/film.txt")
-    # source2 = wr.loadSource("dataset/film/mymovies.txt")
-    #
     corpus1 = wr.buildCorpus(source1)
     corpus2 = wr.buildCorpus(source2)
 
