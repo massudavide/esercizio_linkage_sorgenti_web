@@ -4,8 +4,8 @@ import pagealigner as aligner
 
 def main():
     # basket
-    source1 = wr.loadSource("dataset/basketball/rotoworld.txt")
-    source2 = wr.loadSource("dataset/basketball/espn.txt")
+    source1 = wr.loadSource("dataset/rotoworld.txt")
+    source2 = wr.loadSource("dataset/espn.txt")
 
     # libri
     # source1 = wr.loadSource("dataset/libri/ibs.txt")
