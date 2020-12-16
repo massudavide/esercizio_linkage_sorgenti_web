@@ -103,3 +103,5 @@ https://www.espn.com/nba/player/_/id/2982268/jake-layman
 https://www.espn.com/nba/player/_/id/4065663/josh-okogie
 https://www.espn.com/nba/player/_/id/4431671/jaden-mcdaniels
 https://www.espn.com/nba/player/_/id/4278077/jarred-vanderbilt
+https://www.espn.com/nba/player/_/id/4431672/nico-mannion
+https://www.espn.com/nba/player/_/id/4066421/lonzo-ball

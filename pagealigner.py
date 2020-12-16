@@ -11,8 +11,8 @@ def corrisp_url(df1, df2):
 # e somma gli elem corrisp in df2 ritornando una lista di liste con
 # l'indice df1 e il corrisponte indice di df2
 def trova_pag_corrisp(df1, df2):
-    elem_imp = impElemList(df1)
-    return allineaPagine(elem_imp, df2)
+    elem_imp = imp_elem_list(df1)
+    return allinea_pagine(elem_imp, df2)
 
 # ritorna una lista con le coppie indice dei due df che hanno matchato (stessa coppia)
 # in tutte e due le liste
@@ -27,32 +27,23 @@ def inters_liste(lista1, lista2):
 # dato un df, per ogni riga aggiungi in lista tutte le parole con peso maggiore della media aritmetica
 # ritorna una lista di liste i cui elem sono gli elem con peso maggiore della media aritmetica per ogni riga
 # es [['john', 'wall'],['luguentz', 'dort'],...]
-def impElemList(df):
+def imp_elem_list(df):
     list = []
-    valore_soglia = media_aritmetica(df)
     for i in df.T:
         list2 = []
         dfT = df.T
         for index, row in dfT.iterrows():
-            if row[i] > valore_soglia:
+            if row[i] > 0.07:
                 list2.append(index)
         list.append(list2)
     #print(list)
     return list
 
-def media_aritmetica(df):
-    somma = df.values.sum()
-    numero = np.count_nonzero(df)
-    media = somma/numero
-    print('somma: ', somma, 'numero: ', numero, 'media:', media)
-    return media
-
-
 
 # data una lista di liste contenenti le parole più importanti, cerca nel df qual'è l'indice con sommatoria maggiore per ogni lista di parole date
 # e ritorna una lista di liste contenente l'indice del df corrisp alle parole e l'indice del secondo df che ha dato risultato maggiore
 # es: [[2,0],[1,2],[0,1]]
-def allineaPagine(list, df):
+def allinea_pagine(list, df):
     listaPagine = []
     for i in range(len(list)):
         indice = indice_corrisp(df[list[i]])

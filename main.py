@@ -1,15 +1,18 @@
 import wrapper as wr
 import tfidfmodel as model
 import pagealigner as aligner
+import pandas as pd
+import numpy as np
 
 def main():
-    source1 = wr.loadSource("dataset/nba.txt")
-    source2 = wr.loadSource("dataset/espn.txt")
+    source1 = wr.load_source("dataset/nba.txt")
+    source2 = wr.load_source("dataset/espn.txt")
 
-    corpus1 = wr.buildCorpus(source1)
-    corpus2 = wr.buildCorpus(source2)
+    corpus1 = wr.build_corpus(source1)
+    corpus2 = wr.build_corpus(source2)
 
     df1, df2 = model.esegui_tfIdf(corpus1, corpus2)
+
     lista_url = aligner.corrisp_url(df1, df2)
     stampa_url(lista_url, source1, source2)
 

@@ -3,7 +3,7 @@ from lxml import html
 import sys
 
 # given a page url, returns all leaves of that page
-def getLeaves(url):
+def get_leaves(url):
     #print("Extracting leaves on: ", url)
     all_leaves = list()
     try:
@@ -18,26 +18,26 @@ def getLeaves(url):
     return all_leaves
 
 # given an input with filename, returns a list of url
-def loadSource(filename):
+def load_source(filename):
     try:
         print("Opening file with path: ", filename)
         file = open(filename,"r")
     except OSError:
         print("Could not open/read file with path: ", filename)
         sys.exit()
-    urlList = list()
+    url_list = list()
     rows = file.readlines()
     for r in rows:
-        if r not in urlList:
-            urlList.append(r)
+        if r not in url_list:
+            url_list.append(r)
     file.close()        
-    return urlList
+    return url_list
 
 # given a list of url, returns a corpus of leaves
-def buildCorpus(urlList):
+def build_corpus(url_list):
     corpus = list()
-    for url in range(len(urlList)):
-        leaves = getLeaves(urlList[url])
+    for url in range(len(url_list)):
+        leaves = get_leaves(url_list[url])
         stringa = ''.join(map(str,leaves))
         corpus.append(stringa)
     return corpus
